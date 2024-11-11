@@ -28,8 +28,8 @@ export default function Signup() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <h2>Sign Up</h2>
       <form method="post">
-        <label htmlFor="name">Email</label>
-        <input type="text" name="name" id="name" required />
+        <label htmlFor="Username">UserName</label>
+        <input type="text" name="Username" id="Username" required />
         <label htmlFor="password">Password</label>
         <input type="password" name="password" id="password" required />
         <button type="submit">SignUp</button>

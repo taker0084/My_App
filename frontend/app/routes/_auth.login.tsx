@@ -29,10 +29,10 @@ export default function Login() {
       {error && <p style={{ color: "red" }}>{error}</p>}
       <h2>Log In</h2>
       <form method="post">
-        <label htmlFor="name">Email</label>
-        <input type="text" name="name" id="name" />
+        <label htmlFor="username">UserName</label>
+        <input type="text" name="username" id="username" required />
         <label htmlFor="password">Password</label>
-        <input type="password" name="password" id="password" />
+        <input type="password" name="password" id="password" required />
         <button type="submit">LogIn</button>
       </form>
     </div>
