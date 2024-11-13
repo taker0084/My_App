@@ -32,10 +32,10 @@ class User(BaseModel):
     ).fetchone()
     return User(username=data["username"],password=data["password"], id=data["id"])
   
-  # @classmethod
-  # def get_by_id(cls,user_id):
-  #   db=get_db()
-  #   data = db.execute(                             
-  #     'SELECT * FROM user WHERE id = ?', (user_id,)                   #dbからidの一致する行を取得
-  #   ).fetchone()
-  #   return data
+  @classmethod
+  def get_by_id(cls,user_id):
+    db=get_db()
+    data = db.execute(                             
+      'SELECT * FROM user WHERE id = ?', (user_id,)                   #dbからidの一致する行を取得
+    ).fetchone()
+    return User(username=data["username"],password=data["password"], id=data["id"])
