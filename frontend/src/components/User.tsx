@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 export default function User() {
-  const [IsLogin, setIsLogin] = useState("False");
+  const [Name, setName] = useState("");
   const handlecheck = () => {
     fetch("http://localhost:5001/auth/check/", {
       method: "GET",
@@ -13,8 +13,8 @@ export default function User() {
     })
       .then((res) => res.json())
       .then((json) => {
-        if (json["user_id"] !== "") {
-          setIsLogin("True");
+        if (json["username"] !== "") {
+          setName(json["username"]);
         }
       });
   };
@@ -23,13 +23,16 @@ export default function User() {
   });
   return (
     <div>
-      {IsLogin === "False" ? (
+      {Name === "" ? (
         <>
           <NavLink to={"/signup"}>サインアップ</NavLink>
           <NavLink to={"/login"}>ログイン</NavLink>
         </>
       ) : (
-        <NavLink to={"/logout"}>ログアウト</NavLink>
+        <>
+          <label>{Name}</label>
+          <NavLink to={"/logout"}>ログアウト</NavLink>
+        </>
       )}
     </div>
   );

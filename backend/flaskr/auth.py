@@ -83,9 +83,10 @@ def login():
 def check():
   # return jsonify({"username": "a"}),200
   if 'user_id' in session:
-    return jsonify({"user_id": session['user_id']})
+    user = User.get_by_id(session['user_id'])
+    return jsonify({"username": user.username})
   else:
-    return jsonify({"user_id": ""})
+    return jsonify({"username": ""})
 
 #全てのview関数の前にuserがログイン済みかを確認
 @bp.before_app_request
