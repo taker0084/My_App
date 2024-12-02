@@ -8,9 +8,12 @@ CREATE TABLE user (
 );
 
 CREATE TABLE friend (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  id INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,
   friendname TEXT NOT NULL,
-  birthmonth INTEGER NOT NULL,
-  birthday INTEGER NOT NULL,
-  giftname TEXT NOT NULL
+  register_id INTEGER NOT NULL,
+  age INTEGER NOT NULL,
+  birthday DATE NOT NULL,
+  giftname TEXT ,
+  hobby TEXT ,
+  FOREIGN KEY (register_id) REFERENCES user (id)
 );
