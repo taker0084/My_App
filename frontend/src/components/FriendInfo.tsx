@@ -175,7 +175,7 @@ export default function FriendInfo(props: Props) {
             onSubmit={handleChange}
           >
             <TextField
-              label="Friend Name"
+              label="名前"
               variant="outlined"
               value={friendName}
               required
@@ -183,7 +183,7 @@ export default function FriendInfo(props: Props) {
               fullWidth
             />
             <TextField
-              label="Birthday"
+              label="誕生日"
               variant="outlined"
               type="date"
               value={birthday}
@@ -195,7 +195,7 @@ export default function FriendInfo(props: Props) {
               }}
             />
             <TextField
-              label="Age"
+              label="年齢"
               variant="outlined"
               type="number"
               value={age}
@@ -204,7 +204,7 @@ export default function FriendInfo(props: Props) {
               fullWidth
             />
             <TextField
-              label="Hobby"
+              label="趣味"
               variant="outlined"
               value={hobby}
               // required
@@ -212,7 +212,7 @@ export default function FriendInfo(props: Props) {
               fullWidth
             />
             <TextField
-              label="Gift"
+              label="プレゼント"
               variant="outlined"
               value={gift}
               onChange={(e) => setGift(e.target.value)}
@@ -227,7 +227,7 @@ export default function FriendInfo(props: Props) {
                 fullWidth
                 startIcon={<Edit />}
               >
-                Save Changes
+                変更を保存
               </Button>
               <Box
                 sx={{ display: "flex", alignItems: "center", width: "100%" }}
@@ -240,7 +240,7 @@ export default function FriendInfo(props: Props) {
                   startIcon={<HelpOutline />}
                   onClick={handleSuggest}
                 >
-                  AI Suggest
+                  AIで提案
                 </Button>
                 <Tooltip title="詳細を表示" arrow>
                   <IconButton
@@ -290,7 +290,7 @@ export default function FriendInfo(props: Props) {
         </CardContent>
 
         <CardActions sx={{ justifyContent: "flex-end" }}>
-          <Tooltip title="Delete Friend" arrow>
+          <Tooltip title="このデータを消去する" arrow>
             <IconButton
               color="error"
               onClick={handleDelete}
