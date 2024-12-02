@@ -2,8 +2,9 @@ from datetime import timedelta
 import os
 
 from flask import Flask
-from instance.config import SECRET_KEY 
+from instance.config import GOOGLE_API_KEY, SECRET_KEY 
 from flask_cors import CORS
+import google.generativeai as genai
 
 def create_app(test_config=None):
     # create and configure the app
@@ -11,11 +12,12 @@ def create_app(test_config=None):
     CORS(app,origins=["http://localhost:3000"],supports_credentials=True)
     app.config.from_mapping(  # 標準設定を行う
         SECRET_KEY=SECRET_KEY,  # データの安全性を保つために行う　→　本来は無作為な値で更新
+        GOOGLE_API_KEY=GOOGLE_API_KEY,
         DATABASE=os.path.join(
             app.instance_path, "flaskr.sqlite"
         ),  # データベースへのパス、instance_pathはFlaskのインスタンスが存在
         
-        # PERMANENT_SESSION_LIFETIME=timedelta(days=1),
+        PERMANENT_SESSION_LIFETIME=timedelta(minutes=15),
         # # @flask_login.login_requiredのhttp通信を拒否する
         # SESSION_COOKIE_SECURE=True,
         # # JavaScriptがCookieへアクセスできなくする
@@ -51,8 +53,9 @@ def create_app(test_config=None):
     app.register_blueprint(auth.bp)
 
     # blog機能
-    # from . import friend
-    # app.register_blueprint(.bp)
+    from . import Action
+    
+    app.register_blueprint(Action.bp)
     # app.add_url_rule("/", endpoint="index")  # blog.indexもindexも、両方同じURL'/'を参照する
     
     return app
