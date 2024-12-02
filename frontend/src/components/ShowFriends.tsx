@@ -10,29 +10,15 @@ import {
 import FriendInfo from "./FriendInfo";
 import { useEffect, useState } from "react";
 import FriendRegistration from "./FriendRegister";
+import Header from "./Header";
 
-export default function ShowFriends() {
-  const [id, setId] = useState("");
+type Props = {
+  id: string;
+};
+export default function ShowFriends(Props: Props) {
   const [friend_id, setFriend_id] = useState("");
   const [data, setData] = useState([]);
   const [refreshKey, setRefreshKey] = useState(true);
-
-  // セッションチェック
-  const handleCheck = () => {
-    fetch("http://localhost:5001/session", {
-      method: "GET",
-      mode: "cors",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        setId(json["user_id"]);
-      });
-  };
-
   // リストのリフレッシュ
   const handleRefresh = () => {
     setRefreshKey(!refreshKey);
@@ -76,102 +62,107 @@ export default function ShowFriends() {
   };
 
   useEffect(() => {
-    handleCheck();
+    // handleCheck();
     handleGetAll();
   }, [refreshKey]);
 
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
-      {/* サイドバー部分 */}
-      <Box
-        sx={{
-          width: 250,
-          bgcolor: "#f4f6f8",
-          borderRight: "1px solid #ddd",
-          paddingTop: 2,
-          paddingLeft: 2,
-          paddingRight: 2,
-        }}
-      >
-        <Button
-          variant="contained"
-          color="secondary"
+    <>
+      <Header />
+      <Box sx={{ display: "flex", height: "100vh" }}>
+        {/* サイドバー部分 */}
+        <Box
           sx={{
-            textTransform: "none",
-            fontSize: "16px",
-            borderRadius: "8px",
-            marginBottom: 2,
-            width: "100%",
-            "&:hover": {
-              backgroundColor: "#1976d2",
-            },
+            width: 250,
+            bgcolor: "#f4f6f8",
+            borderRight: "1px solid #ddd",
+            paddingTop: 2,
+            paddingLeft: 2,
+            paddingRight: 2,
           }}
-          onClick={() => setFriend_id("")}
         >
-          友達登録
-        </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            sx={{
+              textTransform: "none",
+              fontSize: "16px",
+              borderRadius: "8px",
+              marginBottom: 2,
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#1976d2",
+              },
+            }}
+            onClick={() => setFriend_id("")}
+          >
+            友達登録
+          </Button>
 
-        <Typography variant="h6" sx={{ marginBottom: 1 }}>
-          Friend List
-        </Typography>
+          <Typography variant="h6" sx={{ marginBottom: 1 }}>
+            Friend List
+          </Typography>
 
-        <Paper sx={{ maxHeight: 400, overflowY: "auto", borderRadius: "8px" }}>
-          {data.length === 0 ? (
-            <Typography variant="body1">No friends found.</Typography>
-          ) : (
-            <List>
-              {data.map((friend) => (
-                <ListItemButton
-                  key={friend["friend_id"]}
-                  onClick={() => setFriend_id(friend["friend_id"])}
-                  sx={{
-                    marginBottom: 1,
-                    borderRadius: "8px",
-                    backgroundColor: isUpcomingBirthday(friend["birthday"])
-                      ? "#ffebee"
-                      : "inherit",
-                    "&:hover": {
+          <Paper
+            sx={{ maxHeight: 400, overflowY: "auto", borderRadius: "8px" }}
+          >
+            {data.length === 0 ? (
+              <Typography variant="body1">No friends found.</Typography>
+            ) : (
+              <List>
+                {data.map((friend) => (
+                  <ListItemButton
+                    key={friend["friend_id"]}
+                    onClick={() => setFriend_id(friend["friend_id"])}
+                    sx={{
+                      marginBottom: 1,
+                      borderRadius: "8px",
                       backgroundColor: isUpcomingBirthday(friend["birthday"])
-                        ? "#ffcdd2"
-                        : "#ddd",
-                    },
-                  }}
-                >
-                  <ListItemText
-                    primary={
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Typography>{friend["name"]}</Typography>
-                        {isUpcomingBirthday(friend["birthday"]) && (
-                          <Typography
-                            component="span"
-                            sx={{
-                              color: "#ff4081",
-                              marginLeft: 1,
-                              fontSize: "0.9rem",
-                              fontWeight: "bold",
-                            }}
-                          >
-                            (一週間以内)
-                          </Typography>
-                        )}
-                      </Box>
-                    }
-                  />
-                </ListItemButton>
-              ))}
-            </List>
-          )}
-        </Paper>
-      </Box>
+                        ? "#fad3d3"
+                        : "inherit",
+                      "&:hover": {
+                        backgroundColor: isUpcomingBirthday(friend["birthday"])
+                          ? "#ffccd2"
+                          : "#ddd",
+                      },
+                    }}
+                  >
+                    <ListItemText
+                      primary={
+                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                          <Typography>{friend["name"]}</Typography>
+                          {isUpcomingBirthday(friend["birthday"]) && (
+                            <Typography
+                              component="span"
+                              sx={{
+                                color: "#ff0000",
+                                marginLeft: 1,
+                                fontSize: "0.9rem",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              (一週間以内)
+                            </Typography>
+                          )}
+                        </Box>
+                      }
+                    />
+                  </ListItemButton>
+                ))}
+              </List>
+            )}
+          </Paper>
+        </Box>
 
-      {/* プロフィール情報部分 */}
-      <Box sx={{ flexGrow: 1, padding: 2 }}>
-        {data.length === 0 || friend_id === "" ? (
-          <FriendRegistration id={id} onSubmitsuccess={handleRefresh} />
-        ) : (
-          <FriendInfo id={friend_id} onSuccess={handleRefresh} />
-        )}
+        {/* プロフィール情報部分 */}
+        <Box sx={{ flexGrow: 1, padding: 2 }}>
+          {data.length === 0 || friend_id === "" ? (
+            <FriendRegistration id={Props.id} onSubmitsuccess={handleRefresh} />
+          ) : (
+            <FriendInfo id={friend_id} onSuccess={handleRefresh} />
+          )}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
