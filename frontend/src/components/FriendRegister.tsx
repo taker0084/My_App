@@ -65,11 +65,21 @@ export default function FriendRegistration(props: Props) {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
-      bgcolor="#e9ecef"
+      sx={{
+        backgroundImage: `url('/images/birthday-background.jpg')`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
       p={2}
     >
       <Card
-        sx={{ maxWidth: 500, width: "100%", borderRadius: 3, boxShadow: 4 }}
+        sx={{
+          maxWidth: 500,
+          width: "100%",
+          borderRadius: 3,
+          boxShadow: 4,
+          mt: 15,
+        }}
       >
         <CardContent>
           <Typography variant="h4" align="center" color="primary" gutterBottom>
