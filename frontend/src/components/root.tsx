@@ -1,11 +1,12 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import Header from "./Header";
 
 export default function Root() {
   const navigate = useNavigate();
   const [Name, setName] = useState("");
-  const handlecheck = () => {
+  const handleCheck = useCallback(() => {
     fetch("http://localhost:5001/session", {
       method: "GET",
       mode: "cors",
@@ -20,12 +21,13 @@ export default function Root() {
           setName(json["username"]);
         }
       });
-  };
+  }, []);
   useEffect(() => {
-    handlecheck();
-  });
+    handleCheck();
+  }, [handleCheck]);
   return (
     <>
+      <Header />
       {Name ? (
         navigate("/User")
       ) : (
@@ -35,9 +37,23 @@ export default function Root() {
           alignItems="center"
           justifyContent="center"
           minHeight="100vh"
-          bgcolor="#f5f5f5"
+          position="relative" // 親要素の位置を指定
           p={4}
         >
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundImage: `url('/images/background.jpg')`, // 背景画像のパス
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: 0.5, // 透過度を指定（0:完全透明〜1:不透明）
+              zIndex: -1, // 背景を前面の要素の後ろに配置
+            }}
+          ></Box>
           <Typography variant="h4" component="h1" color="primary" gutterBottom>
             ようこそ MetaBirthへ
           </Typography>
