@@ -1,10 +1,10 @@
 
-from tkinter import NO
+# from tkinter import NO
 
-from flask import redirect, url_for
+# from flask import redirect, url_for
 from flaskr.db import get_db
-from werkzeug.security import check_password_hash, generate_password_hash
-from pydantic import BaseModel
+from werkzeug.security import generate_password_hash # type: ignore
+from pydantic import BaseModel # type: ignore
 
 class User(BaseModel):
   username:str
@@ -21,7 +21,7 @@ class User(BaseModel):
       )
       db.commit()
     except db.IntegrityError:
-      error = f"User {self.username} is already registered."       #usernameは一意であるため、登録済みの場合エラーを表示
+      error = f" ユーザー名：{self.username}は登録されています ."       #usernameは一意であるため、登録済みの場合エラーを表示
     return error
   
   @classmethod
@@ -30,7 +30,9 @@ class User(BaseModel):
     data = db.execute(
         'SELECT * FROM user WHERE username = ?', (username,)             #dbからusernameが一致する行を取得
     ).fetchone()
-    return User(username=data["username"],password=data["password"], id=data["id"])
+    if data is None:
+      return None
+    else: return User(username=data["username"],password=data["password"], id=data["id"])
   
   @classmethod
   def get_by_id(cls,user_id):
