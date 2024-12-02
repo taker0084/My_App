@@ -101,7 +101,7 @@ export default function FriendRegistration(props: Props) {
             width="100%"
           >
             <TextField
-              label="Friend Name"
+              label="名前"
               variant="outlined"
               name="friendName"
               value={friendName}
@@ -111,7 +111,7 @@ export default function FriendRegistration(props: Props) {
               sx={{ backgroundColor: "white", borderRadius: 1 }}
             />
             <TextField
-              label="Friend Birthday"
+              label="誕生日"
               variant="outlined"
               name="friendBirthday"
               type="date"
@@ -124,7 +124,7 @@ export default function FriendRegistration(props: Props) {
               InputLabelProps={{ shrink: true }}
             />
             <TextField
-              label="Age"
+              label="年齢"
               variant="outlined"
               name="age"
               type="number"
@@ -135,7 +135,7 @@ export default function FriendRegistration(props: Props) {
               sx={{ backgroundColor: "white", borderRadius: 1 }}
             />
             <TextField
-              label="Hobby"
+              label="趣味"
               variant="outlined"
               name="Hobby"
               value={hobby}
