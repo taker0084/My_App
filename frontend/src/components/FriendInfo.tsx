@@ -151,11 +151,11 @@ export default function FriendInfo(props: Props) {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      minHeight="100vh"
-      bgcolor="#f0f4f8"
-      p={4}
+      // minHeight="100vh"
+      // bgcolor="#f0f4f8"
+      // p={4}
     >
-      <Card sx={{ maxWidth: 600, width: "100%", boxShadow: 3 }}>
+      <Card sx={{ width: "100%", boxShadow: 3 }}>
         <CardContent>
           <Typography variant="h5" color="primary" gutterBottom>
             友達情報

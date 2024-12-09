@@ -6,6 +6,7 @@ import Header from "./Header";
 export default function Root() {
   const navigate = useNavigate();
   const [Name, setName] = useState("");
+  const [Id, setId] = useState(null);
   const handleCheck = useCallback(() => {
     fetch("http://localhost:5001/session", {
       method: "GET",
@@ -27,7 +28,7 @@ export default function Root() {
   }, [handleCheck]);
   return (
     <>
-      <Header />
+      <Header setId={() => setId} />
       {Name ? (
         navigate("/User")
       ) : (

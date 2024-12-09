@@ -12,10 +12,8 @@ import { useEffect, useState } from "react";
 import FriendRegistration from "./FriendRegister";
 import Header from "./Header";
 
-type Props = {
-  id: string;
-};
-export default function ShowFriends(Props: Props) {
+export default function ShowFriends() {
+  const [id, setId] = useState("");
   const [friend_id, setFriend_id] = useState("");
   const [data, setData] = useState([]);
   const [refreshKey, setRefreshKey] = useState(true);
@@ -39,6 +37,7 @@ export default function ShowFriends(Props: Props) {
       .then((json) => {
         if (json["status"] === "Success") {
           setData(json.friends);
+          // setId(json.user_id);
         }
       });
   };
@@ -68,12 +67,12 @@ export default function ShowFriends(Props: Props) {
 
   return (
     <>
-      <Header />
+      <Header setId={() => setId} />
       <Box sx={{ display: "flex", height: "100vh" }}>
         {/* サイドバー部分 */}
         <Box
           sx={{
-            width: 250,
+            width: "30%",
             bgcolor: "#f4f6f8",
             borderRight: "1px solid #ddd",
             paddingTop: 2,
@@ -100,7 +99,7 @@ export default function ShowFriends(Props: Props) {
           </Button>
 
           <Typography variant="h6" sx={{ marginBottom: 1 }}>
-            Friend List
+            登録済み一覧
           </Typography>
 
           <Paper
@@ -129,7 +128,13 @@ export default function ShowFriends(Props: Props) {
                   >
                     <ListItemText
                       primary={
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            flexWrap: "wrap",
+                          }}
+                        >
                           <Typography>{friend["name"]}</Typography>
                           {isUpcomingBirthday(friend["birthday"]) && (
                             <Typography
@@ -139,6 +144,7 @@ export default function ShowFriends(Props: Props) {
                                 marginLeft: 1,
                                 fontSize: "0.9rem",
                                 fontWeight: "bold",
+                                whiteSpace: "nowrap",
                               }}
                             >
                               (一週間以内)
@@ -155,9 +161,9 @@ export default function ShowFriends(Props: Props) {
         </Box>
 
         {/* プロフィール情報部分 */}
-        <Box sx={{ flexGrow: 1, padding: 2 }}>
+        <Box sx={{ flexGrow: 1 }}>
           {data.length === 0 || friend_id === "" ? (
-            <FriendRegistration id={Props.id} onSubmitsuccess={handleRefresh} />
+            <FriendRegistration id={id} onSubmitsuccess={handleRefresh} />
           ) : (
             <FriendInfo id={friend_id} onSuccess={handleRefresh} />
           )}
