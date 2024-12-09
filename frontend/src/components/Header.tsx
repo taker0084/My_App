@@ -2,7 +2,10 @@ import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import React, { useEffect, useState, useCallback } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
-export default function Header() {
+type props = {
+  setId: (id: number) => void;
+};
+export default function Header(props: props) {
   const navigate = useNavigate();
   const [Name, setName] = useState("");
 
@@ -18,24 +21,25 @@ export default function Header() {
       .then((res) => res.json())
       .then((json) => {
         if (json["username"] !== "") {
+          props.setId(json.user_id);
           setName(json["username"]);
         } else {
           setName("");
           navigate("/");
         }
       });
-  }, [navigate]);
+  }, [navigate, props]);
   useEffect(() => {
     handleCheck();
-  }, [handleCheck]);
+  }, []);
 
   return (
     <AppBar
       position="static"
       sx={{
         bgcolor: "#f9fed7",
-        boxShadow: 3,
-        padding: { xs: 1, sm: 2 },
+        boxShadow: 0,
+        // padding: { xs: 1, sm: 2 },
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>

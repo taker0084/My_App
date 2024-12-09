@@ -21,7 +21,7 @@ def friends():
             for friend in friends
         ]
         
-        return jsonify({"status": "Success", "friends": friends_list}), 200
+        return jsonify({"user_id":session.get('user_id'),"status": "Success", "friends": friends_list}), 200
 
     json = request.get_json()
     register_id = json['userId']
@@ -86,7 +86,7 @@ def gift(id):
 
     genai.configure(api_key=GOOGLE_API_KEY)
     model = genai.GenerativeModel("gemini-1.5-flash")
-    if friend.hobby is "":
+    if friend.hobby == "":
         hobby = ""
         question = f"${friend.age}歳の趣味を一つランダムに挙げてください、ただし単語で答えてください、また毎回同じ出力を出さないようにしてください、最後に改行を入れないでください"
         response = model.generate_content(question)
